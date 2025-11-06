@@ -11,10 +11,13 @@ import {
 } from "react-router-dom";
 import Menu from "./components/menu/Menu";
 import Login from "./pages/login/Login";
+import User from "./pages/user/User";
+import Product from "./pages/product/Product";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
+const queryClient = new QueryClient();
 
 function App() {
-
 const Layout=()=>{
   return(
     <div className="main">
@@ -22,7 +25,9 @@ const Layout=()=>{
       <div className="container">
         <div className="menuContainer"><Menu /></div>
         <div className="contentContainer">
-          <Outlet />
+          <QueryClientProvider client={queryClient}>
+            <Outlet />
+          </QueryClientProvider>
         </div>
       </div>
       <Footer/>
@@ -46,6 +51,13 @@ const Layout=()=>{
       {
         path: "/products",
         element: <Products />,
+      },
+      {
+        path: "/users/:id",
+        element: <User />,
+      },{
+        path: "/products/:id",
+        element: <Product />,
       }
     ]
   },
